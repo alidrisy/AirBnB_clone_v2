@@ -3,6 +3,9 @@ from models import storage
 from models.base_model import BaseModel
 
 all_objs = storage.all()
+print("===all===")
+print(all_objs)
+print("===all===")
 print("-- Reloaded objects --")
 for obj_id in all_objs.keys():
     obj = all_objs[obj_id]
