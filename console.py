@@ -130,10 +130,6 @@ class HBNBCommand(cmd.Cmd):
                 if type(eval(attrs[1])) is str:
                     attrs[1] = attrs[1].replace('_', ' ')
                 setattr(new_instance, attrs[0], eval(attrs[1]))
-            if isinstance(new_instance, City):
-                state = state_c(new_instance.state_id)
-                state.cities.append(new_instance)
-                print(state.id)
         storage.new(new_instance)
         print(new_instance.id)
         storage.save()
@@ -331,13 +327,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
-
-def state_c(s_id):
-    dict1 = storage.all(State)
-    for v in dict1.values():
-        if v.id == s_id:
-            return v
 
 
 if __name__ == "__main__":

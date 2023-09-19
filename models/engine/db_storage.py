@@ -35,8 +35,8 @@ class DBStorage:
             if type(cls) is str:
                 cls = self.__classes[cls]
             for clas in self.__session.query(cls).all():
-               k = f'{clas.__class__.__name__}.{clas.id}'
-               dict1[k] = clas
+                k = f'{clas.__class__.__name__}.{clas.id}'
+                dict1[k] = clas
         else:
             for cl in self.__classes.values():
                 for clas in self.__session.query(cl).all():
@@ -67,7 +67,7 @@ class DBStorage:
         from models.place import Place
         from models.amenity import Amenity
         from models.base_model import Base
-        self.__classes = {'State': State, 'City': City,'User': User,
+        self.__classes = {'State': State, 'City': City, 'User': User,
                           'Place': Place, 'Review': Review, 'Amenity': Amenity}
         Base.metadata.create_all(self.__engine)
         session_sco = sessionmaker(bind=self.__engine, expire_on_commit=False)

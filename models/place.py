@@ -6,8 +6,12 @@ from sqlalchemy.orm import relationship
 from os import getenv
 metadata = Base.metadata
 place_amenity = Table('place_amenity', metadata,
-                      Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
-                      Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'), primary_key=True,
+                             nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'), primary_key=True,
+                             nullable=False)
                       )
 
 
@@ -25,7 +29,11 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
-    reviews = relationship("Review", cascade='all, delete, delete-orphan', backref='place')
+    reviews = relationship("Review", cascade='all, delete, delete-orphan',
+                           backref='place')
+    amenities = relationship('Amenity', secondary=place_amenity,
+                             viewonly=False, back_populates="place_amenities")
+
     @property
     def reviews(self):
         """getter attribute reviews that returns the list
@@ -37,11 +45,10 @@ class Place(BaseModel, Base):
             if v.place_id == self.id:
                 list1.append(v)
         return list1
-    if getenv("HBNB_TYPE_STORAGE") == "db":
-        amenities = relationship('Amenity', secondary=place_amenity , viewonly=False, back_populates="place_amenities")
-    else:
+
+    if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
-        def amenities(self):
+        def gamenities(self):
             """getter attribute reviews that returns the list
             of Review instances with place_id"""
             from models import storage
@@ -52,9 +59,10 @@ class Place(BaseModel, Base):
                     list1.append(v)
             return list1
 
-        @amenities.setter
-        def amenities(self, obj):
+        @gamenities.setter
+        def gamenities(self, obj):
             """Setter attribute amenities that handles append
             method for adding an Amenity.id"""
-            if obj.__class__.__name__ == "Amenity":
-                self.amenity_ids.append(obj.id)
+            if type(obj).__name__ == "Amenity":
+                if obj.id not in self.amenity_ids:
+                    self.amenity_ids.append(obj.id)
