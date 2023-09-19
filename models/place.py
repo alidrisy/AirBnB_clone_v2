@@ -29,6 +29,6 @@ class Place(BaseModel, Base):
         dict1 = storage.all('Review')
         list1 = []
         for v in dict1.values():
-            if v.state_id == self.id:
+            if v.place_id == self.id:
                 list1.append(v)
         return list1
