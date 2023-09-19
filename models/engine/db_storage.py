@@ -68,7 +68,7 @@ class DBStorage:
         from models.amenity import Amenity
         from models.base_model import Base
         self.__classes = {'State': State, 'City': City,'User': User,
-                          'Place': Place, 'Review': Review}
+                          'Place': Place, 'Review': Review, 'Amenity': Amenity}
         Base.metadata.create_all(self.__engine)
         session_sco = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_sco)
