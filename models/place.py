@@ -25,22 +25,21 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
+    reviews = relationship("Review", cascade='all, delete, delete-orphan', backref='place')
+    @property
+    def reviews(self):
+        """getter attribute reviews that returns the list
+        of Review instances with place_id"""
+        from models import storage
+        dict1 = storage.all('Review')
+        list1 = []
+        for v in dict1.values():
+            if v.place_id == self.id:
+                list1.append(v)
+        return list1
     if getenv("HBNB_TYPE_STORAGE") == "db":
-        reviews = relationship("Review", cascade='all, delete, delete-orphan', backref='place')
         amenities = relationship('Amenity', secondary=place_amenity , viewonly=False, back_populates="place_amenities")
     else:
-        @property
-        def reviews(self):
-            """getter attribute reviews that returns the list
-            of Review instances with place_id"""
-            from models import storage
-            dict1 = storage.all('Review')
-            list1 = []
-            for v in dict1.values():
-                if v.place_id == self.id:
-                    list1.append(v)
-            return list1
-
         @property
         def amenities(self):
             """getter attribute reviews that returns the list
