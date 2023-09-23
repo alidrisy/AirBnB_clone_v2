@@ -6,6 +6,8 @@ import datetime
 from uuid import UUID
 import json
 import os
+from time import sleep
+
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db', 'not relevant')
 class test_basemodel(unittest.TestCase):
