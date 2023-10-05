@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-# sets up your web servers for the deployment of web_static.
+# sets up web servers for the deployment of web_static.
 
-ngin=$(pgrep -f nginx)
-if [ -z "$ngin" ];
-then
-        sudo apt-get -y update
-        sudo apt-get -y install nginx
-fi
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
 sudo mkdir -p /data/web_static/releases/test/
 sudo mkdir -p /data/web_static/shared/
@@ -20,7 +16,7 @@ echo "<html>
   </body>
 </html>
 " | sudo tee /data/web_static/releases/test/index.html > /dev/null
-sudo ln -fs /data/web_static/releases/test/ /data/web_static/current
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 se=$(grep "hbnb_static" /etc/nginx/sites-available/default)
 if [ -z "$se" ]
 then
