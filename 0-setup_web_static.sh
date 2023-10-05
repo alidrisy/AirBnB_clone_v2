@@ -5,7 +5,7 @@ ngin=$(pgrep -f nginx)
 if [ -z "$ngin" ];
 then
         sudo apt-get -y update
-        sudo apt-get -y
+        sudo apt-get -y install nginx
 fi
 
 sudo mkdir -p /data/web_static/releases/test/
