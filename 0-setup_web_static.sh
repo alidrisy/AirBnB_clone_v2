@@ -17,9 +17,7 @@ echo "<html>
 </html>
 " | sudo tee /data/web_static/releases/test/index.html > /dev/null
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-se=$(grep "hbnb_static" /etc/nginx/sites-available/default)
-if [ -z "$se" ]
-then
-        sudo sed -i '38i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
-fi
+
+sudo sed -i '38i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+
 sudo service nginx restart
