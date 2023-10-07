@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Fabric script that generates a .tgz archive  and distributes it
 to server """
-from fabric.api import put, run, sudo, local
+from fabric.api import put, run, sudo, env
 from datetime import datetime
 import os
 
@@ -16,10 +16,10 @@ def do_deploy(archive_path):
     if not os.path.exsist(archive_path):
         return (False)
 
-    check = put(local_path=archive_path, remote_path="/tmp")
+    check = put(archive_path, "/tmp/")
     if check.failed is True:
         return (False)
-    file1 = archive_path.split("/")[1].split(".")[0]
+    file1 = archive_path.split("/")[-1].split(".")[0]
     path = "/data/web_static/releases/{}".format(file1)
     check = sudo(f"mkdir -p {path}")
     if check.failed is True:
