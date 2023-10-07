@@ -13,7 +13,7 @@ env.key_filename = "~/.ssh/id_rsa"
 def do_deploy(archive_path):
     """ distributes an archive to your web servers """
 
-    if not os.path.exsist(archive_path):
+    if not os.path.exists(archive_path):
         return (False)
 
     check = put(archive_path, "/tmp/")
