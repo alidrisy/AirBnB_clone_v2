@@ -26,6 +26,7 @@ def do_pack():
 
 def do_deploy(archive_path):
     """ distributes an archive to your web servers """
+
     if not os.path.exsist(archive_path):
         return (False)
 
@@ -40,7 +41,7 @@ def do_deploy(archive_path):
     check = sudo(f"tar -xzf /tmp/{file1}.tgz -C {path}")
     if check.failed is True:
         return (False)
-    check = sudo(f"rm -rf /tmp/{name}")
+    check = sudo(f"rm -rf /tmp/{file1}.tgz")
     if check.failed is True:
         return (False)
     check = sudo(f"mv {path}/web_static/* {path}")
