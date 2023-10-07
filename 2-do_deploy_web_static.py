@@ -21,19 +21,19 @@ def do_deploy(archive_path):
         return (False)
     file1 = archive_path.split("/")[-1].split(".")[0]
     path = "/data/web_static/releases/{}".format(file1)
-    check = sudo(f"mkdir -p {path}")
+    check = run(f"mkdir -p {path}")
     if check.failed is True:
         return (False)
-    check = sudo(f"tar -xzf /tmp/{file1}.tgz -C {path}")
+    check = run(f"tar -xzf /tmp/{file1}.tgz -C {path}")
     if check.failed is True:
         return (False)
-    check = sudo(f"rm -rf /tmp/{file1}.tgz")
+    check = run(f"rm -rf /tmp/{file1}.tgz")
     if check.failed is True:
         return (False)
-    check = sudo(f"mv {path}/web_static/* {path}")
+    check = run(f"mv {path}/web_static/* {path}")
     if check.failed is True:
         return (False)
-    check = sudo(f"ln -sf {path} /data/web_static/current")
+    check = run(f"ln -sf {path} /data/web_static/current")
     if check.failed is True:
         return (False)
     return (True)
