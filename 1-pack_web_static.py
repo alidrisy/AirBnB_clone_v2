@@ -10,7 +10,7 @@ def do_pack():
     name = f"web_static_{t.year}{t.month}{t.day}{t.hour}{t.minute}\
 {t.second}.tgz"
     local("mkdir -p versions")
-    local(f"tar -cvzf versions/{name} web_static")
-    if local(cmd).failed is True:
+    com = local(f"tar -cvzf versions/{name} web_static")
+    if com.failed is True:
         return (None)
     return (archive_path)
