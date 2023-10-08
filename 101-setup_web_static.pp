@@ -42,10 +42,10 @@
 
  exec { 'chown -R ubuntu:ubuntu /data/':
 	 path => '/usr/bin/:/usr/local/bin/:/bin/' 
- }
+ } ->
  
- exec {'new lication':
-         command => 'sudo sed -i "38i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
+ exec {'new_location':
+         command => 'sed -i "38i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
          provider => 'shell'
  }
 
