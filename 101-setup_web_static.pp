@@ -29,12 +29,16 @@
          group  => 'ubuntu'
  }
 
- exec {'redirect_me':
+ exec {'linke it':
          command => 'ln -sf /data/web_static/releases/test /data/web_static/current',
          provider => 'shell'
  }
 
- exec {'HTTP header':
+ exec { 'chown -R ubuntu:ubuntu /data/':
+	 path => '/usr/bin/:/usr/local/bin/:/bin/' 
+ }
+ 
+ exec {'new lication':
          command => 'sudo sed -i "38i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
          provider => 'shell'
  }
