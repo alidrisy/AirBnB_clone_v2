@@ -24,6 +24,6 @@ echo "<html>
 
 con=$(grep 'location /hbnb_static' /etc/nginx/sites-available/default)
 if [ -z "$con" ]; then
-	sudo sed -i '38i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current;\n\t}\n' /etc/nginx/sites-available/default
+	sudo sed -i '38i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
 fi
 sudo service nginx restart
