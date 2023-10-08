@@ -10,29 +10,35 @@
          require => Exec['update system']
  }
 
- file { '/data/web_static/releases/test/':
-	 ensure => 'directory',
-	 owner  => 'ubuntu',
-	 group  => 'ubuntu'
- }
-
- file { '/data/web_static/shared/':
-	 ensure => 'directory',
-	 owner  => 'ubuntu',
-	 group  => 'ubuntu'
- }
-
+ file { '/data':
+	 ensure  => 'directory' 
+ } -> 
+  
+ file { '/data/web_static':
+	 ensure => 'directory' 
+ } -> 
+  
+ file { '/data/web_static/releases':
+	 ensure => 'directory' 
+ } -> 
+  
+ file { '/data/web_static/releases/test':
+	 ensure => 'directory' 
+ } -> 
+  
+ file { '/data/web_static/shared':
+	 ensure => 'directory' 
+ } -> 
+  
  file { '/data/web_static/releases/test/index.html':
-	 ensure => 'file',
-	 content => 'Holberton School',
-	 owner  => 'ubuntu',
-         group  => 'ubuntu'
- }
-
- exec {'linke it':
-         command => 'ln -sf /data/web_static/releases/test /data/web_static/current',
-         provider => 'shell'
- }
+	 ensure  => 'present',
+	 content => "Holberton School\n" 
+ } -> 
+  
+ file { '/data/web_static/current':
+	 ensure => 'link',
+	 target => '/data/web_static/releases/test' 
+ } ->
 
  exec { 'chown -R ubuntu:ubuntu /data/':
 	 path => '/usr/bin/:/usr/local/bin/:/bin/' 
