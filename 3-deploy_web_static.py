@@ -37,25 +37,25 @@ def do_deploy(archive_path):
     check = put(archive_path, "/tmp/")
     if check.failed is True:
         return (False)
-    check = run(f"sudo mkdir -p {path}")
+    check = run(f"mkdir -p {path}")
     if check.failed is True:
         return (False)
-    check = run(f"sudo tar -xzf /tmp/{file1} -C {path}")
+    check = run(f"tar -xzf /tmp/{file1} -C {path}")
     if check.failed is True:
         return (False)
-    check = run(f"sudo rm -rf /tmp/{file1}")
+    check = run(f"rm -rf /tmp/{file1}")
     if check.failed is True:
         return (False)
-    check = run(f"sudo mv {path}/web_static/* {path}")
+    check = run(f"mv {path}/web_static/* {path}")
     if check.failed is True:
         return (False)
-    check = run(f"sudo rm -rf {path}/web_static")
+    check = run(f"rm -rf {path}/web_static")
     if check.failed is True:
         return (False)
-    check = run(f"sudo rm -rf /data/web_static/current")
+    check = run(f"rm -rf /data/web_static/current")
     if check.failed is True:
         return (False)
-    check = run(f"sudo ln -s {path} /data/web_static/current")
+    check = run(f"ln -s {path} /data/web_static/current")
     if check.failed is True:
         return (False)
     return (True)
