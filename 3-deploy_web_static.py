@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Fabric script that generates a .tgz archive  and distributes it
 to server """
-from fabric.api import put, run, env
+from fabric.api import put, run, env, local
 from datetime import datetime
 import os
 
@@ -62,10 +62,8 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """ Creates and distributes an archive to your web servers """
-
-    archive = do_pack()
-    if archive is None:
-        retuen False
-    re = do_deploy(archive)
-    return re
+    """Creates and distributes an archive to your web servers"""
+    archive_path = do_pack()
+    if archive_path is None:
+        return False
+    return do_deploy(archive_path)

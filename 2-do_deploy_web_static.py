@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ Fabric script that generates a .tgz archive  and distributes it
 to server """
-from fabric.api import put, run, env
+from fabric.api import put, run, env, local
 from datetime import datetime
 import os
 
