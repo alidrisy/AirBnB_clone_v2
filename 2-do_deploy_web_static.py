@@ -1,55 +1,61 @@
 #!/usr/bin/python3
-
-"""Script (based on the file 1-pack_web_static.py) that distributes
-    an archive to your web servers, using the function do_deploy
-"""
-
-from fabric.api import env, put, run
+""" Fabric script that generates a .tgz archive  and distributes it
+to server """
+from fabric.api import put, run, env
+from datetime import datetime
 import os
 
-env.hosts = [
-            '107.23.100.114',
-            '35.153.17.86'
-        ]
-
+env.hosts = ["107.23.100.114", "35.153.17.86"]
 env.user = "ubuntu"
 env.key_filename = "~/.ssh/id_rsa"
 
 
+def do_pack():
+    """ generates a .tgz archive from the contents of the web_static folder
+    of your AirBnB Clone repo, using the function do_pack."""
+
+    t = datetime.now().strftime("%Y%m%d%H%M%S")
+    name = "web_static_{}.tgz".format(t)
+    local("mkdir -p versions")
+    com = local(f"tar -cvzf versions/{name} web_static")
+
+    if com.failed is True:
+        return (None)
+    return (f"versions/{name}")
+
+
 def do_deploy(archive_path):
-    """Function to distribute an archive to web servers
-    """
+    """ distributes an archive to your web servers """
+
     if not os.path.exists(archive_path):
         return (False)
 
-    archive_name = archive_path.split('/')[-1]
-    name = archive_name.split('.')[0]
-    uncompress_path = "/data/web_static/releases/{}".format(name)
-    uncompress_cmd = "sudo tar -xzf /tmp/{} -C {}"\
-                     .format(archive_name, uncompress_path)
-    create_path = "sudo mkdir -p {}".format(uncompress_path)
-    remove_archive = "sudo rm -rf /tmp/{}".format(archive_name)
-    move = "sudo mv {}/web_static/* {}"\
-           .format(uncompress_path, uncompress_path)
-    remove_web_static = "sudo rm -rf {}/web_static".format(uncompress_path)
-    link_archive = "sudo ln -s {} /data/web_static/current"\
-                   .format(uncompress_path)
+    dir1 = archive_path.split("/")[-1].split(".")[0]
+    file1 = f"{dir1}.tgz"
+    path = "/data/web_static/releases/{}".format(dir1)
 
-    if put(archive_path, '/tmp/').failed is True:
+    check = put(archive_path, "/tmp/")
+    if check.failed is True:
         return (False)
-    if run(create_path).failed is True:
+    check = run(f"sudo mkdir -p {path}")
+    if check.failed is True:
         return (False)
-    if run(uncompress_cmd).failed is True:
+    check = run(f"sudo tar -xzf /tmp/{file1} -C {path}")
+    if check.failed is True:
         return (False)
-    if run(remove_archive).failed is True:
+    check = run(f"sudo rm -rf /tmp/{file1}")
+    if check.failed is True:
         return (False)
-    if run(move).failed is True:
+    check = run(f"sudo mv {path}/web_static/* {path}")
+    if check.failed is True:
         return (False)
-    if run(remove_web_static).failed is True:
+    check = run(f"sudo rm -rf {path}/web_static")
+    if check.failed is True:
         return (False)
-    if run("sudo rm -rf /data/web_static/current").failed is True:
+    check = run(f"sudo rm -rf /data/web_static/current")
+    if check.failed is True:
         return (False)
-    if run(link_archive).failed is True:
+    check = run(f"sudo ln -s {path} /data/web_static/current")
+    if check.failed is True:
         return (False)
-    print("New version deployed!")
     return (True)
