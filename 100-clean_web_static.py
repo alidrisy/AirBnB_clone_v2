@@ -17,11 +17,10 @@ def do_clean(number=0):
         number = 1
 
     list1 = sorted(os.listdir("versions"))
-    list1 = list(reversed(list1))
-    for i in range(number, len(list1)):
-        local(f"rm  versions/{list1[i]}")
+    [list1.pop() for i in range(number)]
+    [local("rm versions/{}".format(a)) for a in list1]
 
-    list1 = run("ls -r /data/web_static/releases/").split()
+    list1 = run("ls -tr").split()
     list1 = [a for a in list1 if "web_static_" in a]
-    for i in range(number, len(list1)):
-        run(f"rm -rf /data/web_static/releases/{list1[i]}")
+    [list1.pop() for i in range(number)]
+    [run("rm -rf ./{}".format(a)) for a in list1]
