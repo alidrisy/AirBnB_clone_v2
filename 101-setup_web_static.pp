@@ -45,7 +45,7 @@
  } ->
  
  exec {'new_location':
-         command => 'sed -i "38i\\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
+         command => 'sed -i "38i\	location /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default',
          provider => 'shell'
  }
 
