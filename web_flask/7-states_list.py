@@ -7,12 +7,6 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.teardown_appcontext
-def close(obj):
-    """ Remove the current SQLAlchemy Session """
-    storage.close()
-
-
 @app.route('/states_list')
 def states_list():
     """ Display a HTML page: (inside the tag BODY)
@@ -22,6 +16,12 @@ def states_list():
     LI tag: description of one State: <state.id>: <B><state.name></B> """
     states = list(storage.all('State').values())
     return render_template("7-states_list.html", states=states)
+
+
+@app.teardown_appcontext
+def close(obj):
+    """ Remove the current SQLAlchemy Session """
+    storage.close()
 
 
 if __name__ == "__main__":
