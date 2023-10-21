@@ -56,7 +56,7 @@
 					<div class="information">
 						<div class="max_guest">
 							<div class="guest_icon"></div>
-							<p>{{ place.max_gust }} Guests</p>
+							<p>{{ place.max_guest }} Guests</p>
 						</div>
 						<div class="number_rooms">
 							<div class="bed_icon"></div>
@@ -68,7 +68,7 @@
 						</div>
 					</div>
 					<div class="user"><b>Owner</b> {{ place.user.first_name }}</div>
-					<div class="description">{{ place.description }}
+					<div class="description">{{ place.description|safe }}
 				</div>
 				</article>
 				{% endfor %}
