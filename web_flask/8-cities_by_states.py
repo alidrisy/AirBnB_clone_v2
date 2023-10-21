@@ -7,12 +7,12 @@ from models import storage
 app = Flask(__name__)
 
 
-@app.route('/states_list', strict_slashes=False)
-def states_list():
-    """Display a HTML page with list states and cities """
+@app.route('/cities_by_states', strict_slashes=False)
+def cities_by_states():
+    """Display a HTML page with list states """
     states = list(storage.all("State").values())
     states.sort(key=lambda x: x.name)
-    return render_template('7-states_list.html', states=states)
+    return render_template('8-cities_by_states.html', states=states)
 
 
 @app.teardown_appcontext
