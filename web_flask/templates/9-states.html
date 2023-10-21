@@ -5,12 +5,12 @@
     </HEAD>
     <BODY>
 	{% if states %}
-	{% if name -%}
+	{% if name %}
 	<H1>State: {{ name }}</H1>
         <H3>Cities:</H3>
 	{% else %}
         <H1>States</H1>
-	{% endif -%}
+	{% endif %}
         <UL>
         {% for state in states|sort(attribute="name") %}
             <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
