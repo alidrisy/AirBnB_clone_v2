@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+
+	{% if state -%}
+	<H1>State: {{ state.name }}</H1>
+        <H3>Cities:</H3>
+	{% set states_c = state.cities %}
+	{% else -%}
+        <H1>States</H1>
+	{% set states_c = states %}
+	{%- endif -%}
+
+        <UL>
+        {% for state in states_c|sort(attribute="name") %}
+            <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
+        {% endfor %}
+        </UL>
+    </BODY>
+</HTML>
