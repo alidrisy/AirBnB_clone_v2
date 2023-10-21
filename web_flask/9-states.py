@@ -7,22 +7,23 @@ from models import storage
 app = Flask(__name__)
 
 
-@app.route('/states/', defaults={'id': None}, strict_slashes=False)
+@app.route('/states', strict_slashes=False)
 @app.route('/states/<id>', strict_slashes=False)
-def states(id):
+def states(id=None):
     """Display a HTML page with list states or state and his cities """
     dict_states = storage.all("State")
-    if id:
+    states = None
+    name = None
+    if id is not None:
         k = f"State.{id}"
-        try:
+        if k in dict_states:
             state = dict_states[k]
             name = state.name
-            return render_template('9-states.html',
-                                   states=state.cities, name=name)
-        except Exception:
-            return render_template('9-states.html')
-    states = dict_states.values()
-    return render_template('9-states.html', states=states)
+            states = state.cities
+    else:
+        states = dict_states.values()
+        name = None
+    return render_template('9-states.html', states=states, name=name)
 
 
 @app.teardown_appcontext
