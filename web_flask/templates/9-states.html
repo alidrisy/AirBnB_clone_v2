@@ -5,17 +5,14 @@
     </HEAD>
     <BODY>
 
-	{% if state -%}
-	<H1>State: {{ state.name }}</H1>
+	{% if name -%}
+	<H1>State: {{ name }}</H1>
         <H3>Cities:</H3>
-	{% set states_c = state.cities %}
-	{% else -%}
+	{% else %}
         <H1>States</H1>
-	{% set states_c = states %}
-	{%- endif -%}
-
+	{% endif %}
         <UL>
-        {% for state in states_c|sort(attribute="name") %}
+        {% for state in states|sort(attribute="name") %}
             <LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
         {% endfor %}
         </UL>
