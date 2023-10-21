@@ -18,7 +18,8 @@ def states(id):
         if state:
             name = state.name
             return render_template('9-states.html', states=state.cities, name=name)
-        return render_template('9-states.html')
+        else:
+            return render_template('9-states.html')
     states = dict_states.values()
     return render_template('9-states.html', states=states)
 
