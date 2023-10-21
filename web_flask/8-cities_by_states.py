@@ -9,13 +9,13 @@ app = Flask(__name__)
 
 @app.route('/cities_by_states', strict_slashes=False)
 def cities_by_states():
-    """Display a HTML page with list states """
+    """ Display a HTML page with list states and statie's cities """
     states = storage.all("State").values()
     return render_template('8-cities_by_states.html', states=states)
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown(exception):
     """ Remove the current SQLAlchemy Session """
     storage.close()
 
