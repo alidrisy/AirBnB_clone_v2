@@ -14,9 +14,11 @@ def states(id):
     dict_states = storage.all("State")
     if id:
         k = f"State.{id}"
-        state = dict_states[k]
-        name = state.name
-        return render_template('9-states.html', states=state.cities, name=name)
+        state = dict_states.get(k)
+        if state:
+            name = state.name
+            return render_template('9-states.html', states=state.cities, name=name)
+        return render_template('9-states.html')
     states = dict_states.values()
     return render_template('9-states.html', states=states)
 
