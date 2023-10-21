@@ -17,9 +17,9 @@ def states(id):
         try:
             state = dict_states[k]
             name = state.name
-            return render_template('9-states.html', states=state.cities,
-                    name=name)
-        except:
+            return render_template('9-states.html',
+                                   states=state.cities, name=name)
+        except Exception:
             return render_template('9-states.html')
     states = dict_states.values()
     return render_template('9-states.html', states=states)
@@ -29,6 +29,7 @@ def states(id):
 def teardown_db(exception):
     """ Remove the current SQLAlchemy Session """
     storage.close()
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='5000')
